@@ -1,0 +1,23 @@
+#!/usr/bin/expect -f
+set force_conservative 1  ;# set to 1 to force conservative mode even if
+;# script wasn't run conservatively originally
+if {$force_conservative} {
+    set send_slow {1 .1}
+    proc send {ignore arg} {
+        sleep .1
+        exp_send -s -- $arg
+    }
+}
+
+set timeout -1
+spawn apt install -y libk4a1.3 libk4a1.3-dev
+match_max 100000
+expect -exact "Do you accept the EULA license terms?"
+send -- "yes\r"
+expect EOF
+
+spawn apt install -y libk4abt1.0 libk4abt1.0-dev
+match_max 100000
+expect -exact "Do you accept the EULA license terms?"
+send -- "yes\r"
+expect EOF

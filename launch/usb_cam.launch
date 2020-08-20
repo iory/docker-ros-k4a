@@ -1,0 +1,20 @@
+<launch>
+
+  <node name="usb_cam_node"
+        pkg="usb_cam" type="usb_cam_node" >
+    <rosparam>
+      pixel_format: yuyv
+      autofocus: true
+    </rosparam>
+  </node>
+
+  <group ns="usb_cam_node" >
+    <group ns="image_raw" >
+      <rosparam param="disable_pub_plugins">
+        - 'image_transport/compressedDepth'
+        - 'image_transport/theora'
+      </rosparam>
+    </group>
+  </group>
+
+</launch>
