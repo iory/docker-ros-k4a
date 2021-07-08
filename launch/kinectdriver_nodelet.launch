@@ -99,7 +99,7 @@
       <rosparam>
         device: "Azure Kinect Microphone Array"
       </rosparam>
-      <remap from="/audio" to="/k4a/audio" />
+      <remap from="/audio" to="/$(arg camera)/audio" />
     </node>
   </group>
 
