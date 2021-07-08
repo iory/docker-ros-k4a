@@ -88,7 +88,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   ros-melodic-robot-state-publisher
 
 WORKDIR ${WORKSPACE}
-RUN git clone https://github.com/microsoft/Azure_Kinect_ROS_Driver ${WORKSPACE}/src/Azure_Kinect_ROS_Driver
+# RUN git clone https://github.com/microsoft/Azure_Kinect_ROS_Driver ${WORKSPACE}/src/Azure_Kinect_ROS_Driver
+RUN git clone -b timeout_fix https://github.com/jmachowinski/Azure_Kinect_ROS_Driver ${WORKSPACE}/src/Azure_Kinect_ROS_Driver
 RUN rosdep install --from-paths -i -r -y src
 RUN mv /bin/sh /bin/sh_tmp && ln -s /bin/bash /bin/sh
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash; catkin build -DCMAKE_BUILD_TYPE=Release
