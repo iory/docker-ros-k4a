@@ -21,7 +21,7 @@
   <arg name="imu_rate_target" default="1"/>                       <!-- Desired output rate of IMU messages. Set to 0 (default) for full rate (1.6 kHz). -->
   <arg name="load_driver" default="true"/>
   <arg name="publish_tf" default="true"/>
-  <arg name="audio_device_name" default="Azure Kinect Microphone Array" />
+  <arg name="audio_device" default="hw:0,0" />
 
   <group ns="$(arg camera)" >
     <node name="$(arg nodelet_manager_name)"
@@ -98,7 +98,7 @@
     <node name="audio_capture_k4a"
           pkg="azure_kinect_ros_driver" type="audio_capture.py" >
       <rosparam subst_value="true" >
-        device: $(arg audio_device_name)
+        device: $(arg audio_device)
       </rosparam>
       <remap from="/audio" to="/$(arg camera)/audio" />
     </node>
