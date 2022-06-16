@@ -112,7 +112,6 @@ RUN apt update && apt install --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 WORKDIR ${WORKSPACE}
-# RUN git clone https://github.com/microsoft/Azure_Kinect_ROS_Driver ${WORKSPACE}/src/Azure_Kinect_ROS_Driver
 RUN git clone https://github.com/microsoft/Azure_Kinect_ROS_Driver ${WORKSPACE}/src/Azure_Kinect_ROS_Driver
 
 RUN rosdep init \
@@ -126,10 +125,10 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash; catkin build -DCMAKE_BUILD_TYPE=Re
 RUN rm /bin/sh && mv /bin/sh_tmp /bin/sh
 
 # nvidia-container-runtime
-ENV NVIDIA_VISIBLE_DEVICES \
-  ${NVIDIA_VISIBLE_DEVICES:-all}
-ENV NVIDIA_DRIVER_CAPABILITIES \
-  ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+# ENV NVIDIA_VISIBLE_DEVICES \
+#   ${NVIDIA_VISIBLE_DEVICES:-all}
+# ENV NVIDIA_DRIVER_CAPABILITIES \
+#   ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 RUN pip install numpy
 RUN pip install sounddevice
