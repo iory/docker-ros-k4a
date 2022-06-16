@@ -6,6 +6,8 @@ ENV WORKSPACE /catkin_ws
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+RUN mv /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/cuda.list.save
+RUN mv /etc/apt/sources.list.d/nvidia-ml.list /etc/apt/sources.list.d/nvidia-ml.list.save
 RUN apt update && apt install -y curl software-properties-common
 
 RUN apt update && apt install -y \
