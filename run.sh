@@ -2,7 +2,7 @@
 
 xhost +local:root
 docker run --rm \
-       --gpus all \
+       --runtime nvidia \
        --privileged \
        --volume="/dev:/dev" \
        --name "kinect" \
