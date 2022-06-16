@@ -1,5 +1,5 @@
 # Use the official ubuntu:18.04 image as the parent image
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda-arm64:11.1.1-cudnn8-devel-ubuntu18.04
 SHELL ["bash", "-c"]
 
 ENV WORKSPACE /catkin_ws
@@ -15,8 +15,8 @@ RUN apt update && apt install -y \
     ninja-build \
     doxygen \
     clang \
-    gcc-multilib \
-    g++-multilib \
+    gcc-multilib-arm-linux-gnueabihf \
+    g++-multilib-arm-linux-gnueabihf \
     python3 \
     git-lfs \
     nasm \
@@ -36,14 +36,16 @@ RUN apt update && apt install -y \
     libopencv-dev \
     expect
 
+RUN apt update && apt install -y vim
+
 ENV ACCEPT_EULA=Y
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBIAN_FRONTEND teletype
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && apt-add-repository https://packages.microsoft.com/ubuntu/18.04/prod && apt update
-RUN apt update && apt install -y vim
-COPY ./install_k4a.exp /install_k4a.exp
-RUN expect /install_k4a.exp
+    && apt-add-repository https://packages.microsoft.com/ubuntu/18.04/multiarch/prod \
+    && apt update && apt install -y libk4a1.4 libk4a1.4-dev k4a-tools
+# COPY ./install_k4a.exp /install_k4a.exp
+# RUN expect /install_k4a.exp
 
 RUN git clone https://github.com/microsoft/Azure-Kinect-Sensor-SDK
 RUN cd Azure-Kinect-Sensor-SDK && mkdir build && cd build && cmake .. -GNinja && ninja
