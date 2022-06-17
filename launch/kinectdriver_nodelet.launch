@@ -102,7 +102,7 @@
       </group>
     </group>
 
-    <group ns="rgb" >
+    <group ns="rgb" if="$(eval arg('color_format') == 'jpeg')">
       <node name="republish_image"
             pkg="image_transport" type="republish"
 	          args="compressed raw" >
@@ -148,31 +148,62 @@
       <arg name="queue_size" value="$(arg queue_size)" />
     </include>
 
+    <!-- half point cloud -->
     <!-- resize for point cloud -->
-    <node name="resize_image_rect_color"
+    <node name="resize_rgb"
           pkg="nodelet" type="nodelet"
           args="load image_proc/resize $(arg manager)" >
       <param name="scale_height" value="0.5" />
       <param name="scale_width" value="0.5" />
       <remap from="image" to="rgb/image_rect_color" />
       <remap from="camera_info" to="rgb/camera_info" />
-      <remap from="~image" to="rgb_resize/image_rect_color" />
-      <remap from="~camera_info" to="rgb_resize/camera_info" />
+      <remap from="~image" to="rgb_half/image_rect_color" />
+      <remap from="~camera_info" to="rgb_half/camera_info" />
     </node>
 
+    <!-- half point cloud -->
+    <!-- resize for point cloud -->
+    <node name="resize_depth_to_rgb_half"
+          pkg="nodelet" type="nodelet"
+          args="load image_proc/resize $(arg manager)" >
+      <param name="interpolation" value="0" />
+      <param name="scale_height" value="0.5" />
+      <param name="scale_width" value="0.5" />
+      <remap from="image" to="depth_to_rgb/image_raw" />
+      <remap from="camera_info" to="depth_to_rgb/camera_info" />
+      <remap from="~image" to="depth_to_rgb_half/image_raw" />
+      <remap from="~camera_info" to="depth_to_rgb_half/camera_info" />
+    </node>
+
+    <!-- half point cloud -->
+    <!-- resize for point cloud -->
+    <node name="resize_depth__half"
+          pkg="nodelet" type="nodelet"
+          args="load image_proc/resize $(arg manager)" >
+      <param name="interpolation" value="0" />
+      <param name="scale_height" value="0.5" />
+      <param name="scale_width" value="0.5" />
+      <remap from="image" to="depth/image_rect_raw" />
+      <remap from="camera_info" to="depth/camera_info" />
+      <remap from="~image" to="depth_half/image_rect_raw" />
+      <remap from="~camera_info" to="depth_half/camera_info" />
+    </node>
+
+    <!-- half point cloud -->
     <!-- Depth-to-RGB registration and processing -->
     <include if="$(arg depth_registered_processing)"
              file="$(find rgbd_launch)/launch/includes/depth_registered.launch.xml">
       <arg name="manager"                   value="$(arg manager)" />
-      <arg name="rgb"                       value="rgb_resize" />
-      <arg name="depth"                     value="depth" />
-      <arg name="depth_registered"          value="depth_to_rgb" />
-      <arg name="depth_registered_filtered" value="depth_to_rgb" />
+      <arg name="rgb"                       value="rgb_half" />
+      <arg name="depth"                     value="depth_half" />
+      <arg name="depth_registered"          value="depth_to_rgb_half" />
+      <arg name="depth_registered_filtered" value="depth_to_rgb_half" />
       <arg name="respawn"                   value="$(arg respawn)" />
       <arg name="sw_registered_processing"  value="$(arg sw_registered_processing)" />
       <arg name="hw_registered_processing"  value="$(arg hw_registered_processing)" />
       <arg name="queue_size"                value="$(arg queue_size)" />
     </include>
+
   </group>
 
 </launch>
