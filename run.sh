@@ -1,5 +1,7 @@
 #!/bin/bash
 
+xinit /etc/X11/xinit/xinitrc -- /usr/bin/X :10 &
+export DISPLAY=:10
 xhost +local:root
 docker run --rm \
        --runtime nvidia \
