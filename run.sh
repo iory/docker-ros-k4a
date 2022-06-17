@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ ! -n "${DISPLAY}" ]] ; then
+  xinit /etc/X11/xinit/xinitrc -- /usr/bin/X :1 &
+  export DISPLAY=:1
+fi
 xhost +local:root
 docker run --rm \
        --runtime nvidia \
