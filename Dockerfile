@@ -102,6 +102,8 @@ RUN apt update && apt install --no-install-recommends -y \
 
 WORKDIR ${WORKSPACE}
 RUN git clone https://github.com/microsoft/Azure_Kinect_ROS_Driver ${WORKSPACE}/src/Azure_Kinect_ROS_Driver
+WORKDIR ${WORKSPACE}
+RUN git clone https://github.com/ros-drivers/rgbd_launch ${WORKSPACE}/src/rgbd_launch
 
 # bootstrap rosdep
 RUN apt update && rosdep init && rosdep update \
