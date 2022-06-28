@@ -6,7 +6,7 @@ if [[ ! -n "${DISPLAY}" ]] ; then
 fi
 xhost +local:root
 docker run --rm \
-       --runtime nvidia \
+       --gpus all \
        --privileged \
        --volume="/dev:/dev" \
        --name "kinect" \
