@@ -1,0 +1,12 @@
+[Unit]
+Description=Azure kinect service
+
+[Service]
+User=applications
+WorkingDirectory=~
+ExecStart=/bin/bash /home/applications/ros/melodic/src/docker-ros-k4a/run_pr1012n.bash
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=network-online.target
