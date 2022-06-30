@@ -1,9 +1,14 @@
 #!/bin/bash
 
+set +x
+
+# for headless
 if [[ ! -n "${DISPLAY}" ]] ; then
+  pkill --full "xinit /etc/X11/xinit/xinitrc -- /usr/bin/X :1"
   xinit /etc/X11/xinit/xinitrc -- /usr/bin/X :1 &
   export DISPLAY=:1
 fi
+
 xhost +local:root
 docker run --rm \
        --gpus all \
@@ -19,3 +24,5 @@ docker run --rm \
        -it iory/docker-ros-k4a:latest /bin/bash -i -c \
        "source /catkin_ws/devel/setup.bash && roslaunch /kinectdriver_nodelet.launch camera:=${1:k4a} body_tracking_enabled:=true depth_mode:=WFOV_2X2BINNED color_resolution:=1440P fps:=30 point_cloud:=false rgb_point_cloud:=false color_format:=jpeg"
 xhost +local:docker
+
+set -x
