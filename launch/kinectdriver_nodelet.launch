@@ -177,7 +177,7 @@
 
     <!-- half point cloud -->
     <!-- resize for point cloud -->
-    <node name="resize_depth__half"
+    <node name="resize_depth_half"
           pkg="nodelet" type="nodelet"
           args="load image_proc/resize $(arg manager)" >
       <param name="interpolation" value="0" />
