@@ -1,0 +1,27 @@
+[Unit]
+Description=X11 session for applications
+After=graphical.target systemd-user-sessions.service
+
+[Service]
+User=applications
+WorkingDirectory=~
+
+PAMName=login
+Environment=XDG_SESSION_TYPE=x11
+TTYPath=/dev/tty8
+StandardInput=tty
+UnsetEnvironment=TERM
+
+UtmpIdentifier=tty8
+UtmpMode=user
+
+StandardOutput=journal
+# ExecStartPre=/bin/chvt 8
+# ExecStart=/usr/bin/xinit /etc/X11/xinit/xinitrc -- /usr/bin/X :1 vt8 -keeptty
+ExecStart=/usr/bin/xinit /etc/X11/xinit/xinitrc -- /usr/bin/X :1
+Restart=on-failure
+#Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=graphical.target

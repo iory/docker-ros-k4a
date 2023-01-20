@@ -1,0 +1,12 @@
+[Unit]
+Description=PR1040 ping service
+
+[Service]
+Type=simple
+User=applications
+Group=applications
+ExecStart=/bin/bash -c "while true; do ping -c 1 133.11.216.211 || true ; sleep 1; done"
+Restart=on-failure
+
+[Install]
+WantedBy=network-online.target
