@@ -109,6 +109,7 @@ RUN apt update && apt install --no-install-recommends -y \
     ros-melodic-compressed-image-transport\
     ros-melodic-audio-common-msgs \
     ros-melodic-usb-cam \
+    ros-melodic-tf2-geometry-msgs \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 WORKDIR ${WORKSPACE}
